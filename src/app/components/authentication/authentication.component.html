@@ -1,0 +1,12 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+  <label for="cpf">Seu cpf:</label>
+  <input type="number" id="cpf"  formControlName="cpf" placeholder="seu cpf">
+  <label for="senha">Sua senha:</label>
+  <input type="password" id="senha" formControlName="senha">
+
+  <button type="submit" [disabled]="loginForm.invalid">Login</button>
+
+</form>
+
+

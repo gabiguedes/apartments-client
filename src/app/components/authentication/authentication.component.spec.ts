@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AutheticationComponent } from './authetication.component';
+import { AutheticationComponent } from './authentication.component';
 
 describe('AutheticationComponent', () => {
   let component: AutheticationComponent;
