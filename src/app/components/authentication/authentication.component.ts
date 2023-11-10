@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.scss']
 })
-export class AuthenticationComponent {
+export class AuthenticationComponent implements OnInit{
 
   loginForm!: FormGroup;
 
@@ -24,7 +24,12 @@ export class AuthenticationComponent {
   }
 
   onSubmit() {
+    console.log(this.loginForm.get('cpf'))
     console.log("fui clickado")
+  }
+
+  get cpf() {
+    return this.loginForm.get('cpf');
   }
 
 }
