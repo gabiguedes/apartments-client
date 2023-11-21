@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {UserService} from "../../services/user.service";
+import {IUser} from "../../interfaces/IUser";
+import {resolve} from "@angular/compiler-cli";
+import {IUserTokenResponse} from "../../interfaces/IUserTokenResponse";
 
 @Component({
   selector: 'app-authentication',
@@ -11,7 +15,7 @@ export class AuthenticationComponent implements OnInit{
   loginForm!: FormGroup;
   msgInvalidCpf : string = "CPF Inválido"
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private userService: UserService) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -25,8 +29,17 @@ export class AuthenticationComponent implements OnInit{
   }
 
   onSubmit() {
-    console.log(this.loginForm.get('cpf')?.value)
-    console.log("fui clickado")
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    var user:IUser = this.loginForm.getRawValue() as IUser;
+    this.userService.requestUser(user).subscribe((response: IUserTokenResponse) => {
+      if(response.token == null) {
+        console.log("falha na autenticacao, user ou senha incorretos")
+      }
+    })
+
   }
 
   validateCpf = (control: AbstractControl): { invalidCpf: boolean } | null => {
