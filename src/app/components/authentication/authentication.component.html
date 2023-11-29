@@ -1,16 +1,28 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<mat-card-content class="container">
+  <mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-card-content class="conteudo-login">
+        <mat-form-field appearance="outline" class="form-field-full">
+          <mat-label>Seu cpf:</mat-label>
+          <input matInput  type="text" id="cpf"  formControlName="cpf">
+          <mat-error *ngIf="loginForm.get('cpf')?.hasError('invalidCpf')">
+            {{msgInvalidCpf}}
+          </mat-error>
+        </mat-form-field>
 
-  <label for="cpf">Seu cpf:</label>
-  <input type="text" id="cpf"  formControlName="cpf" placeholder="seu cpf">
-  <label for="password">Sua senha:</label>
-  <input type="password" id="password" formControlName="password">
+        <mat-form-field appearance="outline" class="form-field-full">
+          <mat-label>Senha</mat-label>
+          <input type="password" matInput formControlName="password">
+        </mat-form-field>
 
-  <div *ngIf="loginForm.get('cpf')?.hasError('invalidCpf')">
-    {{msgInvalidCpf}}
-  </div>
+        <mat-card-actions align="end">
+          <button mat-button color="primary" class="full" align="end" type="submit" [disabled]="loginForm.invalid">Login</button>
+        </mat-card-actions>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</mat-card-content>
 
-  <button type="submit" [disabled]="loginForm.invalid">Login</button>
-
-</form>
 
 

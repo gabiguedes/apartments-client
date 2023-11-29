@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../services/user.service";
-import {IUser} from "../../interfaces/IUser";
-import {resolve} from "@angular/compiler-cli";
-import {IUserTokenResponse} from "../../interfaces/IUserTokenResponse";
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UserService } from "../../services/user.service";
+import { IUser } from "../../interfaces/IUser";
+import { IUserTokenResponse } from "../../interfaces/IUserTokenResponse";
+import { HttpErrorResponse } from "@angular/common/http";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-authentication',
@@ -15,7 +17,7 @@ export class AuthenticationComponent implements OnInit{
   loginForm!: FormGroup;
   msgInvalidCpf : string = "CPF Inválido"
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) {}
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private snackBar: MatSnackBar, private router: Router) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -33,13 +35,36 @@ export class AuthenticationComponent implements OnInit{
       return;
     }
 
-    var user:IUser = this.loginForm.getRawValue() as IUser;
-    this.userService.requestUser(user).subscribe((response: IUserTokenResponse) => {
-      if(response.token == null) {
-        console.log("falha na autenticacao, user ou senha incorretos")
+    const user: IUser = this.loginForm.getRawValue() as IUser;
+    this.userService.requestUser(user).subscribe(
+      (response: IUserTokenResponse) => {
+        // Sucesso na autenticação
+        console.log('Autenticação bem-sucedida', response);
+        // Redirecionar para a página desejada
+        this.router.navigate(['/user-noob']);
+        this.snackBar.open('Autenticação bem-sucedida', 'Fechar', {
+          duration: 2000, // Duração em milissegundos
+        });
+      },
+      (error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          // Código 401: Não autorizado (usuário ou senha incorretos)
+          console.log('Falha na autenticação, usuário ou senha incorretos');
+          this.snackBar.open('Falha na autenticação', 'Usuário ou senha incorretos.', {
+            duration: 3000
+          });
+        } else if (error.status === 403) {
+          // Código 403: Proibido (o usuário não tem permissão para acessar)
+          console.log('Falha na autenticação, permissão negada');
+          this.snackBar.open('Falha na autenticação', 'Usuário ou senha incorretos.', {
+            duration: 3000
+          });
+        } else {
+          // Outros códigos de erro
+          console.log(`Erro na requisição: ${error.message}`);
+        }
       }
-    })
-
+    );
   }
 
   validateCpf = (control: AbstractControl): { invalidCpf: boolean } | null => {
