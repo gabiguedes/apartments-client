@@ -15,25 +15,6 @@ export class UserService {
 
   constructor(private httpClient: HttpClient, private router: Router) { }
 
-  requestUser(user: IUser) : Observable<IUserTokenResponse> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*'
-    });
-
-    return this.httpClient.post<any>(apiUrl + "/login", user, { headers }).pipe(
-      tap((resp : IUserTokenResponse) => {
-        if(!resp.success) return;
-
-        localStorage.setItem('token', btoa(JSON.stringify(resp['token'])));
-        localStorage.setItem('user', btoa(JSON.stringify(resp['user'])));
-        localStorage.setItem('description', btoa(JSON.stringify(resp['description'])));
-        localStorage.setItem('success', btoa(JSON.stringify(resp['success'])));
-
-        this.router.navigate(['']);
-      }));
-  }
-
   logout() {
     localStorage.clear();
     this.router.navigate(['login']);

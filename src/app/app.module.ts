@@ -5,18 +5,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticationComponent } from "./components/authentication/authentication.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {MatInputModule} from "@angular/material/input";
-import {MatCardModule} from "@angular/material/card";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatInputModule } from "@angular/material/input";
+import { MatCardModule } from "@angular/material/card";
 import { UserNoobComponent } from './components/user-noob/user-noob.component';
+import { MatButtonModule } from "@angular/material/button";
+import { AdminSupremeComponent } from './components/admin-supreme/admin-supreme.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthenticationComponent,
-    UserNoobComponent
+    UserNoobComponent,
+    AdminSupremeComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { UserNoobComponent } from './components/user-noob/user-noob.component';
     BrowserAnimationsModule,
     MatSnackBarModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
