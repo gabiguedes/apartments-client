@@ -1,0 +1,49 @@
+html, body {
+    height: 100%; /* Garante que o body ocupe toda a altura da tela */
+    margin: 0; /* Remove a margem padrão */
+}
+
+body {
+    display: flex; /* Define o body como um contêiner flexível */
+    flex-direction: column; /* Organiza os filhos em uma coluna */
+}
+
+.gg-header {
+    background-color: #42a5f5;
+    padding: 1px;
+    border: 2px solid yellow;
+}
+
+header h1 {
+    color: white;
+}
+
+.gg-section-login {
+    flex: 1; /* Faz a seção de login ocupar o espaço restante */
+    border: 2px solid green; 
+    height: 300px; /* Você pode remover isso se quiser que o conteúdo determine a altura */
+    width: 300px;
+    margin: 0 auto; /* Centraliza horizontalmente */
+    text-align: center; /* Centraliza o texto e os elementos internos */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza o conteúdo verticalmente */
+}
+
+.gg-section-login div {
+    margin-bottom: 2.5px; /* Espaço entre os elementos do formulário */
+}
+
+.gg-div-cpf-input {
+    border: 2px solid grey;
+}
+
+.gg-div-password-input {
+    border: 2px solid grey;
+}
+
+footer {
+    border: 2px solid palevioletred;
+    padding: 10px; /* Adicione um pouco de espaçamento interno */
+    text-align: center; /* Centraliza o texto no footer */
+}
